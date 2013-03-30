@@ -1,0 +1,6 @@
+d:\users\kevin\documents\visual studio 2012\Projects\SharpPhysics\SharpPhysics\obj\Debug\SharpPhysics.csprojResolveAssemblyReference.cache
+D:\Users\Kevin\Documents\Visual Studio 2012\Projects\AcculturationPhyics\SharpPhysics\obj\Debug\SharpPhysics.csprojResolveAssemblyReference.cache
+D:\Users\Kevin\Documents\Visual Studio 2012\Projects\AcculturationPhyics\SharpPhysics\bin\Debug\SharpPhysics.dll
+D:\Users\Kevin\Documents\Visual Studio 2012\Projects\AcculturationPhyics\SharpPhysics\bin\Debug\SharpPhysics.pdb
+D:\Users\Kevin\Documents\Visual Studio 2012\Projects\AcculturationPhyics\SharpPhysics\obj\Debug\SharpPhysics.dll
+D:\Users\Kevin\Documents\Visual Studio 2012\Projects\AcculturationPhyics\SharpPhysics\obj\Debug\SharpPhysics.pdb
