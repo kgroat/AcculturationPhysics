@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,14 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\ILine.cs" />
-    <Compile Include="Api\Impl\Line.cs" />
-    <Compile Include="Api\Impl\Polygon.cs" />
-    <Compile Include="Api\Impl\Vector.cs" />
-    <Compile Include="Api\IPhysicsEnvironment.cs" />
-    <Compile Include="Api\IPhysicsObject.cs" />
-    <Compile Include="Api\IVector.cs" />
-    <Compile Include="Api\IPolygon.cs" />
+    <Compile Include="Graphics\Api\Impl\DotNetGraphics.cs" />
+    <Compile Include="Graphics\Api\IRenderable.cs" />
+    <Compile Include="Graphics\Api\ISharpGraphics.cs" />
+    <Compile Include="Physics\Api\ILine.cs" />
+    <Compile Include="Physics\Api\Impl\Line.cs" />
+    <Compile Include="Physics\Api\Impl\PhysicsObject.cs" />
+    <Compile Include="Physics\Api\Impl\Polygon.cs" />
+    <Compile Include="Physics\Api\Impl\Vector.cs" />
+    <Compile Include="Physics\Api\IPhysicsEnvironment.cs" />
+    <Compile Include="Physics\Api\IPhysicsObject.cs" />
+    <Compile Include="Physics\Api\IVector.cs" />
+    <Compile Include="Physics\Api\IPolygon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

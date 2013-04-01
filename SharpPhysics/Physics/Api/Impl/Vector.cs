@@ -1,4 +1,4 @@
-﻿namespace SharpPhysics.Api.Impl
+﻿namespace SharpPhysics.Physics.Api.Impl
 {
     using System;
     using System.Collections.Generic;

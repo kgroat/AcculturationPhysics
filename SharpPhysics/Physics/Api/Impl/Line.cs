@@ -1,4 +1,4 @@
-﻿namespace SharpPhysics.Api.Impl
+﻿namespace SharpPhysics.Physics.Api.Impl
 {
     using System;
     using System.Collections.Generic;
@@ -69,18 +69,18 @@
             this._Self = this._End - this._Start;
         }
 
-        public bool Intersects(Line intersector)
+        public bool Intersects(ILine intersector)
         {
-            var P = new Vector(-this.Y, this.X);
-            var h = ((Start - intersector.Start) * P) / (intersector._Self * P);
+            var P = new Vector(-intersector.Y, intersector.X);
+            var h = ((-this.Start + intersector.Start) * P) / (this * P);
             return h > 0 && h < 1;
         }
 
-        public Vector PointOfIntersection(Line intersector)
+        public Vector PointOfIntersection(ILine intersector)
         {
-            var P = new Vector(-this.Y, this.X);
-            var h = ((this.Start - intersector.Start) * P) / (intersector._Self * P);
-            return intersector.Start + intersector._Self * h;
+            var P = new Vector(-intersector.Y, intersector.X);
+            var h = ((-this.Start + intersector.Start) * P) / (this * P);
+            return this.Start + this * h;
         }
 
         Vector Add(Vector addend)
@@ -115,12 +115,12 @@
 
         bool ILine.Intersects(ILine intersector)
         {
-            return this.Intersects((Line)intersector);
+            return this.Intersects(intersector);
         }
 
         IVector ILine.PointOfIntersection(ILine intersector)
         {
-            return this.PointOfIntersection((Line)intersector);
+            return this.PointOfIntersection(intersector);
         }
 
         IVector IVector.Add(IVector addend)
@@ -151,6 +151,46 @@
         IVector IVector.Normalize()
         {
             return this._Self.Normalize();
+        }
+
+        public static Vector operator +(Line addend1, IVector addend2)
+        {
+            return addend1._Self.Add(addend2);
+        }
+
+        public static Vector operator -(Line minuend, IVector subtrahend)
+        {
+            return minuend._Self.Subtract(subtrahend);
+        }
+
+        public static Vector operator *(Line multiplicand, float multiplier)
+        {
+            return multiplicand.Multiply(multiplier);
+        }
+
+        public static Vector operator /(Line dividend, float divisor)
+        {
+            return dividend.Divide(divisor);
+        }
+
+        public static float operator *(Line multiplicand, IVector multiplier)
+        {
+            return multiplicand._Self.Dot(multiplier);
+        }
+
+        public static Vector operator -(Line origin)
+        {
+            return new Vector(-origin._Self.X, -origin._Self.Y);
+        }
+
+        public static bool operator ==(Line origin, IVector other)
+        {
+            return origin.Equals(other);
+        }
+
+        public static bool operator !=(Line origin, IVector other)
+        {
+            return !origin.Equals(other);
         }
     }
 }
