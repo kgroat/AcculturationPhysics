@@ -91,6 +91,7 @@
         {
             get
             {
+                SortEdges();
                 return _Edges;
             }
         }
@@ -99,7 +100,7 @@
         {
             get
             {
-                return _Edges.Select(edge => edge.End);
+                return this.Edges.Select(edge => edge.End);
             }
         }
 

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpPhysics", "SharpPhysics\SharpPhysics.csproj", "{FC89D242-351D-4D83-8C06-5A02819D8482}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWindow", "TestWindow\TestWindow.csproj", "{656FF6F5-F895-4946-92FE-652DF7886A24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{FC89D242-351D-4D83-8C06-5A02819D8482}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC89D242-351D-4D83-8C06-5A02819D8482}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC89D242-351D-4D83-8C06-5A02819D8482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{656FF6F5-F895-4946-92FE-652DF7886A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656FF6F5-F895-4946-92FE-652DF7886A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656FF6F5-F895-4946-92FE-652DF7886A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656FF6F5-F895-4946-92FE-652DF7886A24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

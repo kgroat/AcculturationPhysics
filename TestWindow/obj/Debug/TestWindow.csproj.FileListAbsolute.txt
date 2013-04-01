@@ -1,0 +1,13 @@
+D:\Dev\AcculturationPhysics\TestWindow\bin\Debug\TestWindow.exe.config
+D:\Dev\AcculturationPhysics\TestWindow\bin\Debug\TestWindow.exe
+D:\Dev\AcculturationPhysics\TestWindow\bin\Debug\TestWindow.pdb
+D:\Dev\AcculturationPhysics\TestWindow\obj\Debug\TestWindow.csprojResolveAssemblyReference.cache
+D:\Dev\AcculturationPhysics\TestWindow\obj\Debug\MainWindow.baml
+D:\Dev\AcculturationPhysics\TestWindow\obj\Debug\MainWindow.g.cs
+D:\Dev\AcculturationPhysics\TestWindow\obj\Debug\App.g.cs
+D:\Dev\AcculturationPhysics\TestWindow\obj\Debug\TestWindow_MarkupCompile.cache
+D:\Dev\AcculturationPhysics\TestWindow\obj\Debug\TestWindow.g.resources
+D:\Dev\AcculturationPhysics\TestWindow\obj\Debug\TestWindow.Properties.Resources.resources
+D:\Dev\AcculturationPhysics\TestWindow\obj\Debug\TestWindow.csproj.GenerateResource.Cache
+D:\Dev\AcculturationPhysics\TestWindow\obj\Debug\TestWindow.exe
+D:\Dev\AcculturationPhysics\TestWindow\obj\Debug\TestWindow.pdb

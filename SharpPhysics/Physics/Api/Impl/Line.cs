@@ -192,5 +192,17 @@
         {
             return !origin.Equals(other);
         }
+
+
+        public System.Drawing.PointF ToPoint()
+        {
+            return new System.Drawing.PointF(X, Y);
+        }
+
+
+        public System.Drawing.SizeF ToSize()
+        {
+            return new System.Drawing.SizeF(X, Y);
+        }
     }
 }
