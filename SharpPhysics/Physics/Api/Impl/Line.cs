@@ -8,7 +8,9 @@
 
     internal class Line : ILine
     {
-        private Vector _Start, _End, _Self;
+        protected Vector _Start, _End, _Self;
+
+        protected IPolygon _Bounds;
 
         internal Vector Start
         {
@@ -42,6 +44,14 @@
             }
         }
 
+        internal IPolygon Bounds
+        {
+            get
+            {
+                return this._Bounds;
+            }
+        }
+
         IVector ILine.Start
         {
             get { return this._Start; }
@@ -62,53 +72,83 @@
             get { return this._Self.Y; }
         }
 
+        public float Length
+        {
+            get { return this._Self.Length; }
+        }
+
         internal Line(Vector Start, Vector End)
         {
             this._Start = Start;
             this._End = End;
             this._Self = this._End - this._Start;
+            this._Bounds = new Triangle(this._Start, this._Start, this._End);
         }
 
-        public bool Intersects(ILine intersector)
+        internal Line(float startX, float startY, float endX, float endY)
         {
+            this._Start = new Vector(startX, startY);
+            this._End = new Vector(endX, endY);
+            this._Self = this._End - this._Start;
+            this._Bounds = new Triangle(this._Start, this._Start, this._End);
+        }
+
+        public virtual bool Intersects(ILine intersector)
+        {
+            if (intersector is Bezier3 || intersector is Bezier4)
+            {
+                return intersector.Intersects(this);
+            }
             var P = new Vector(-intersector.Y, intersector.X);
             var h = ((-this.Start + intersector.Start) * P) / (this * P);
-            return h > 0 && h < 1;
+            return h >= 0 && h <= 1;
         }
 
-        public Vector PointOfIntersection(ILine intersector)
+        public virtual Vector PointOfIntersection(ILine intersector)
         {
             var P = new Vector(-intersector.Y, intersector.X);
             var h = ((-this.Start + intersector.Start) * P) / (this * P);
             return this.Start + this * h;
         }
 
-        Vector Add(Vector addend)
+        internal virtual Vector PointAtSection(float t)
+        {
+            var u = 1 - t;
+            return (this.Start * u) + (this.End * t);
+        }
+
+        internal virtual Line[] SplitAt(float t)
+        {
+            var mid = this.PointAtSection(t);
+            return new Line[] { new Line(Start, mid), new Line(mid, End) };
+        }
+
+        internal Vector Add(Vector addend)
         {
             return this._Self.Add(addend);
         }
 
-        Vector Subtract(Vector addend)
+        internal Vector Subtract(Vector addend)
         {
             return this._Self.Subtract(addend);
         }
 
-        float Dot(Vector addend)
+        internal float Dot(Vector addend)
         {
             return this._Self.Dot(addend);
         }
 
-        Vector Multiply(float addend)
+        internal Vector Multiply(float addend)
         {
             return this._Self.Multiply(addend);
         }
 
-        Vector Divide(float addend)
+        internal Vector Divide(float addend)
         {
             return this._Self.Divide(addend);
         }
 
-        Vector Normalize()
+        internal Vector Normalize()
         {
             return this._Self.Normalize();
         }
@@ -121,6 +161,16 @@
         IVector ILine.PointOfIntersection(ILine intersector)
         {
             return this.PointOfIntersection(intersector);
+        }
+
+        IVector ILine.PointAtSection(float t)
+        {
+            return this.PointAtSection(t);
+        }
+
+        ILine[] ILine.SplitAt(float t)
+        {
+            return this.SplitAt(t);
         }
 
         IVector IVector.Add(IVector addend)
@@ -193,12 +243,10 @@
             return !origin.Equals(other);
         }
 
-
         public System.Drawing.PointF ToPoint()
         {
             return new System.Drawing.PointF(X, Y);
         }
-
 
         public System.Drawing.SizeF ToSize()
         {

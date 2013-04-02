@@ -15,5 +15,9 @@
         bool Intersects(ILine intersector);
 
         IVector PointOfIntersection(ILine intersector);
+
+        IVector PointAtSection(float t);
+
+        ILine[] SplitAt(float t);
     }
 }

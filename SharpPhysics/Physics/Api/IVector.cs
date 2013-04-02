@@ -13,6 +13,8 @@
 
         float Y { get; }
 
+        float Length { get; }
+
         IVector Add(IVector addend);
 
         IVector Subtract(IVector subtrahend);

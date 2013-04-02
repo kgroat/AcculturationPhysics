@@ -453,5 +453,20 @@
         {
             g.FillRectangle(b, location.X, location.Y, size.X, size.Y);
         }
+
+        public SizeF MeasureString(string text, Font font)
+        {
+            return g.MeasureString(text, font);
+        }
+
+        public SizeF MeasureString(string text, Font font, int width)
+        {
+            return g.MeasureString(text, font, width);
+        }
+
+        public SizeF MeasureString(string text, Font font, SizeF layoutArea)
+        {
+            return g.MeasureString(text, font, layoutArea);
+        }
     }
 }

@@ -147,5 +147,11 @@
         void FillRectangle(Brush b, float x, float y, float width, float height);
 
         void FillRectangle(Brush b, IVector location, IVector size);
+
+        SizeF MeasureString(string text, Font font);
+
+        SizeF MeasureString(string text, Font font, int width);
+
+        SizeF MeasureString(string text, Font font, SizeF layoutArea);
     }
 }

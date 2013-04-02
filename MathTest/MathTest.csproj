@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FC89D242-351D-4D83-8C06-5A02819D8482}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{58E2CF35-D1E6-4A34-A9B6-64ED8CBDB1B4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpPhysics</RootNamespace>
-    <AssemblyName>SharpPhysics</AssemblyName>
+    <RootNamespace>MathTest</RootNamespace>
+    <AssemblyName>MathTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,46 +32,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Design" />
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Graphics\Api\GraphicsHelper.cs" />
-    <Compile Include="Graphics\Api\Impl\DotNetGraphics.cs" />
-    <Compile Include="Graphics\Api\ARenderable.cs" />
-    <Compile Include="Graphics\Api\Impl\RenderContext.cs" />
-    <Compile Include="Graphics\Api\IRenderContext.cs" />
-    <Compile Include="Graphics\Api\ISharpGraphics.cs" />
-    <Compile Include="Physics\Api\ILine.cs" />
-    <Compile Include="Physics\Api\Impl\Bezier3.cs" />
-    <Compile Include="Physics\Api\Impl\Bezier4.cs" />
-    <Compile Include="Physics\Api\Impl\Line.cs" />
-    <Compile Include="Physics\Api\Impl\PhysicsEnvironment.cs" />
-    <Compile Include="Physics\Api\Impl\PhysicsObject.cs" />
-    <Compile Include="Physics\Api\Impl\Polygon.cs" />
-    <Compile Include="Physics\Api\Impl\Quadrilateral.cs" />
-    <Compile Include="Physics\Api\Impl\Triangle.cs" />
-    <Compile Include="Physics\Api\Impl\Vector.cs" />
-    <Compile Include="Physics\Api\IPhysicsEnvironment.cs" />
-    <Compile Include="Physics\Api\IPhysicsObject.cs" />
-    <Compile Include="Physics\Api\IVector.cs" />
-    <Compile Include="Physics\Api\IPolygon.cs" />
-    <Compile Include="Physics\Api\PhysicsHelper.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpPhysics\SharpPhysics.csproj">
+      <Project>{fc89d242-351d-4d83-8c06-5a02819d8482}</Project>
+      <Name>SharpPhysics</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

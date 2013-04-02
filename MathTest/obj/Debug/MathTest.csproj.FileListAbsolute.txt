@@ -1,0 +1,8 @@
+D:\Dev\AcculturationPhysics\MathTest\bin\Debug\MathTest.exe.config
+D:\Dev\AcculturationPhysics\MathTest\bin\Debug\MathTest.exe
+D:\Dev\AcculturationPhysics\MathTest\bin\Debug\MathTest.pdb
+D:\Dev\AcculturationPhysics\MathTest\bin\Debug\SharpPhysics.dll
+D:\Dev\AcculturationPhysics\MathTest\bin\Debug\SharpPhysics.pdb
+D:\Dev\AcculturationPhysics\MathTest\obj\Debug\MathTest.csprojResolveAssemblyReference.cache
+D:\Dev\AcculturationPhysics\MathTest\obj\Debug\MathTest.exe
+D:\Dev\AcculturationPhysics\MathTest\obj\Debug\MathTest.pdb

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -11,24 +12,24 @@
     {
         private Vector _Center;
 
+        private float _SignedArea;
+
         private float _Area;
 
         private ObservableCollection<Line> _Edges;
 
-        private bool EdgesSorted;
+        private bool EdgesSorted, VerticesFound;
 
         private float _Radius;
 
+        private IEnumerable<Vector> _Vertices;
+
         internal Polygon(IEnumerable<Line> Edges)
         {
-
             this._Edges = new ObservableCollection<Line>(Edges);
-            this._Edges.CollectionChanged += Edges_CollectionChanged;
-            this._Center = FindCenter(Verticies);
-            this.EdgesSorted = false;
-            this._Radius = -1;
+            this._Edges.CollectionChanged += _Edges_CollectionChanged;
+            this.InitializeValues();
             this.SortEdges();
-            this._Area = this.CalculateArea();
         }
 
         internal float Radius
@@ -37,7 +38,7 @@
             {
                 if (this._Radius <= 0)
                 {
-                    this._Radius = _Edges.Max(edge => (edge.End - this._Center).Length);
+                    this._Radius = _Edges.Max(edge => (this._Center - edge.End).Length);
                 }
                 return _Radius;
             }
@@ -49,7 +50,7 @@
             {
                 if (this._Center == null)
                 {
-                    this._Center = FindCenter(this.Verticies);
+                    this._Center = FindCenter(this.Verticies, this.Area);
                 }
                 return this._Center;
             }
@@ -57,7 +58,7 @@
             {
                 if (this._Center == null)
                 {
-                    this._Center = FindCenter(this.Verticies);
+                    this._Center = FindCenter(this.Verticies, this.Area);
                 }
 
                 if (this._Center != value)
@@ -68,7 +69,8 @@
                     int j = _Edges.Count() - 1;
                     for (int i = 0; i < _Edges.Count(); i++)
                     {
-                        _Edges[j].Start = (_Edges[i].End += change);
+                        _Edges[i].End = change + _Edges[i].End;
+                        _Edges[j].Start = _Edges[i].End;
                         j = i;
                     }
                 }
@@ -81,9 +83,23 @@
             {
                 if (this._Area <= 0)
                 {
-                    this._Area = this.CalculateArea();
+                    this._SignedArea = FindArea(this.Verticies);
+                    this._Area = Math.Abs(this._SignedArea);
                 }
                 return _Area;
+            }
+        }
+
+        internal float SignedArea
+        {
+            get
+            {
+                if (this._Area <= 0)
+                {
+                    this._SignedArea = this.CalculateArea();
+                    this._Area = Math.Abs(this._SignedArea);
+                }
+                return _SignedArea;
             }
         }
 
@@ -91,7 +107,10 @@
         {
             get
             {
-                SortEdges();
+                if (!this.EdgesSorted)
+                {
+                    this.SortEdges();
+                }
                 return _Edges;
             }
         }
@@ -100,7 +119,12 @@
         {
             get
             {
-                return this.Edges.Select(edge => edge.End);
+                if (!this.VerticesFound)
+                {
+                    this._Vertices = this.Edges.Select(edge => edge.End);
+                    this.VerticesFound = true;
+                }
+                return this._Vertices;
             }
         }
 
@@ -126,56 +150,32 @@
         
         private float CalculateArea()
         {
-            var vertices = this.Verticies.ToList();
-            var points = vertices.Count();
-
-            float  area=0.0f;
-            int i, j=points-1;
-            IVector pointI, pointJ;
-
-            for (i=0; i<points; i++) {
-                pointI = vertices[i];
-                pointJ = vertices[j];
-                area+=(pointJ.X+pointI.X)*(pointJ.Y-pointI.Y);
-                j=i; 
-            }
-
-            return Math.Abs(area)*.5f;
+            return this.Area;
         }
 
         private void SortEdges()
         {
-            if (!this.EdgesSorted)
+            for (int i = 0; i < this._Edges.Count() - 1; i++)
             {
-                for (int i = 0; i < this._Edges.Count() - 1; i++)
+                for (int j = i + 1; j < this._Edges.Count(); j++)
                 {
-                    for (int j = i + 1; j < this._Edges.Count(); j++)
+                    if (this._Edges[j].Start == this._Edges[i].End)
                     {
-                        if (this._Edges[j].Start == this._Edges[i].End)
-                        {
-                            var swap = this._Edges[i + 1];
-                            this._Edges[i + 1] = this._Edges[j];
-                            this._Edges[j] = swap;
-                            break;
-                        }
+                        var swap = this._Edges[i + 1];
+                        this._Edges[i + 1] = this._Edges[j];
+                        this._Edges[j] = swap;
+                        break;
                     }
                 }
-                this.EdgesSorted = true;
             }
-        }
-
-        private static Vector FindCenter(IEnumerable<Vector> verticies)
-        {
-            var centroid = new Vector(0, 0);
-            centroid = verticies.Aggregate(centroid, (center, vertex) => center += vertex);
-            return centroid.Divide(verticies.Count());
+            this.EdgesSorted = true;
         }
 
         public bool IsInside(IVector point)
         {
-            if ((_Center - point).Length > Radius) return false;
+            if ((Center - point).Length > Radius) return false;
             var lineOfIntersection = new Line((Vector)point, new Vector(Radius, Radius) + point);
-            int intersectionCount = _Edges.Count(edge => edge.Intersects(lineOfIntersection));
+            int intersectionCount = Edges.Count(edge => edge.Intersects(lineOfIntersection));
             return (intersectionCount % 2) == 1;
         }
 
@@ -203,17 +203,56 @@
             throw new NotImplementedException();
         }
 
-        public IPolygon Difference(IPolygon polygon)
+        private void _Edges_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            InitializeValues();
         }
 
-        private void Edges_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void InitializeValues()
         {
             this._Center = null;
             this._Area = -1;
-            this.EdgesSorted = false;
             this._Radius = -1;
+            this.EdgesSorted = false;
+            this.VerticesFound = false;
+        }
+
+        internal static Vector FindCenter(IEnumerable<Vector> verticies, float area)
+        {
+            var v = verticies.ToList();
+            var centroid = new Vector(0, 0);
+            for (int i = 0; i < v.Count() - 1; i++)
+            {
+                var tmp = ((v[i].X * v[i + 1].Y) - (v[i + 1].X * v[i].Y));
+                centroid.X += (v[i].X + v[i + 1].X) * tmp;
+                centroid.Y += (v[i].Y + v[i + 1].Y) * tmp;
+            }
+            return centroid.Divide(6*area);
+        }
+
+        internal static Vector FindCenter(IEnumerable<Vector> verticies)
+        {
+            return FindCenter(verticies, FindArea(verticies));
+        }
+
+        internal static float FindArea(IEnumerable<Vector> verticies)
+        {
+            var v = verticies.ToList();
+            var points = v.Count();
+
+            float area = 0.0f;
+            int i, j = points - 1;
+            IVector pointI, pointJ;
+
+            for (i = 0; i < points; i++)
+            {
+                pointI = v[i];
+                pointJ = v[j];
+                area += (pointJ.X + pointI.X) * (pointJ.Y - pointI.Y);
+                j = i;
+            }
+
+            return area * .5f;
         }
     }
 }

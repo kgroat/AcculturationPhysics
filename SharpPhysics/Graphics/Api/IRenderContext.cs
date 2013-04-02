@@ -7,10 +7,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IRenderable
+    public interface IRenderContext
     {
-        IPhysicsObject PhysicsObject { get; }
+        IPhysicsEnvironment PhysicsEnvironment { get; }
 
-        void Render(ISharpGraphics graphics);
+        IList<ARenderable> Renderables { get; }
     }
 }

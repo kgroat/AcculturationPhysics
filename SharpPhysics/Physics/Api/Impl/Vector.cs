@@ -69,6 +69,11 @@
             this._Length = (float)Math.Sqrt(this._X * this._X + this._Y * this._Y);
         }
 
+        internal float Cross(IVector other)
+        {
+            return this.X * other.Y - this.Y * other.X;
+        }
+
         public Vector Add(IVector addend)
         {
             return new Vector(X + addend.X, Y + addend.Y);
@@ -157,6 +162,16 @@
         public static Vector operator /(Vector dividend, float divisor)
         {
             return dividend.Divide(divisor);
+        }
+
+        public static Vector operator *(float multiplicand, Vector multiplier)
+        {
+            return multiplier.Multiply(multiplicand);
+        }
+
+        public static Vector operator /(float dividend, Vector divisor)
+        {
+            return divisor.Divide(dividend);
         }
 
         public static float operator *(Vector multiplicand, IVector multiplier)

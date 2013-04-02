@@ -10,6 +10,8 @@
     {
         IEnumerable<IPhysicsObject> PhysicsObjects { get; }
 
+        float Speed { get; set; }
+
         void Step();
     }
 }

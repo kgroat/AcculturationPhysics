@@ -9,8 +9,10 @@
     public interface IPhysicsObject
     {
         IVector CenterOfMass { get; }
-        float Z { get; }
+
         float Mass { get; }
+
+        float Z { get; }
         float Theta { get; }
 
         float Dx { get; }
