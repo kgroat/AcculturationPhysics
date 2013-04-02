@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathTest
+namespace SharpPhysics.Graphics.Api
 {
-    class Program
+    class PolyRegion
     {
-        static void Main(string[] args)
-        {
-            
-        }
     }
 }

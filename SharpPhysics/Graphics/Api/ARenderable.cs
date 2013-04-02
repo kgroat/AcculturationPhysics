@@ -1,7 +1,6 @@
 ﻿namespace SharpPhysics.Graphics.Api
 {
     using SharpPhysics.Physics.Api;
-    using SharpPhysics.Physics.Api.Impl;
     using System.Drawing;
     using System;
     using System.Collections.Generic;
@@ -69,7 +68,7 @@
             }
         }
 
-        public ARenderable(IPhysicsObject PhysicsObject)
+        public ARenderable(PhysicsObject PhysicsObject)
         {
             __Width = __Height = 100;
             __TextureOffset = new Vector(0, 0);
@@ -78,7 +77,7 @@
             _PhysicsObject = (PhysicsObject)PhysicsObject;
         }
 
-        public IVector TextureOffset
+        public Vector TextureOffset
         {
             get
             {
@@ -94,7 +93,7 @@
             }
         }
 
-        public IVector TextureScale
+        public Vector TextureScale
         {
             get
             {
@@ -111,7 +110,7 @@
             }
         }
 
-        public IVector TextureSize
+        public Vector TextureSize
         {
             get
             {
@@ -153,11 +152,19 @@
             }
         }
 
-        public IPhysicsObject PhysicsObject
+        public PhysicsObject PhysicsObject
         {
             get
             {
                 return this._PhysicsObject;
+            }
+        }
+
+        public Polygon Bounds
+        {
+            get
+            {
+                return this._PhysicsObject.Bounds;
             }
         }
 

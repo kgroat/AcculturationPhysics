@@ -6,12 +6,15 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IPhysicsEnvironment
+    public class LocalPhysics
     {
-        IEnumerable<IPhysicsObject> PhysicsObjects { get; }
+        public LocalPhysics()
+        {
 
-        float Speed { get; set; }
+        }
 
-        void Step();
+        public PhysicsEnvironmentSettings Settings { get; set; }
+
+        public Polygon Region { get; set; }
     }
 }

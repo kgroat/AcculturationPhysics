@@ -1,4 +1,4 @@
-﻿namespace SharpPhysics.Physics.Api.Impl
+﻿namespace SharpPhysics.Physics.Api
 {
     using System;
     using System.Collections.Generic;
@@ -6,17 +6,17 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class Vector : IVector
+    public class Vector
     {
-        private float _X, _Y, _Length;
+        protected float _X, _Y, _Length;
 
-        internal float X
+        public float X
         {
             get
             {
                 return _X;
             }
-            set
+            internal set
             {
                 if (_X != value)
                 {
@@ -26,13 +26,13 @@
             }
         }
 
-        internal float Y
+        public float Y
         {
             get
             {
                 return _Y;
             }
-            set
+            internal set
             {
                 if (_Y != value)
                 {
@@ -42,91 +42,66 @@
             }
         }
 
-        float IVector.X
-        {
-            get { return this._X; }
-        }
-
-        float IVector.Y
-        {
-            get { return this._Y; }
-        }
-
         public float Length
         {
             get { return _Length; }
         }
 
-        internal Vector()
+        public Vector()
         {
             this._X = this._Y = this._Length = 0;
         }
 
-        internal Vector(float X, float Y)
+        public Vector(float X, float Y)
         {
             this._X = X;
             this._Y = Y;
             this._Length = (float)Math.Sqrt(this._X * this._X + this._Y * this._Y);
         }
 
-        internal float Cross(IVector other)
+        public virtual float Cross(Vector other)
         {
             return this.X * other.Y - this.Y * other.X;
         }
 
-        public Vector Add(IVector addend)
+        public virtual Vector Add(Vector addend)
         {
             return new Vector(X + addend.X, Y + addend.Y);
         }
 
-        public Vector Subtract(IVector subtrahend)
+        public virtual Vector Subtract(Vector subtrahend)
         {
             return new Vector(X - subtrahend.X, Y - subtrahend.Y);
         }
 
-        public float Dot(IVector other)
+        public virtual float Dot(Vector other)
         {
             return X * other.X + Y * other.Y;
         }
 
-        public Vector Multiply(float multiplicand)
+        public virtual Vector Multiply(float multiplicand)
         {
             return new Vector(X * multiplicand, Y * multiplicand);
         }
 
-        public Vector Divide(float dividend)
+        public virtual Vector Divide(float dividend)
         {
             return new Vector(X / dividend, Y / dividend);
         }
 
-        public Vector Normalize()
+        public virtual System.Drawing.PointF ToPoint()
+        {
+            return new System.Drawing.PointF(X, Y);
+        }
+
+        public virtual System.Drawing.SizeF ToSize()
+        {
+            return new System.Drawing.SizeF(X, Y);
+        }
+
+        public virtual Vector Normalize()
         {
             return this / _Length;
-        }
-
-        IVector IVector.Add(IVector addend)
-        {
-            return this.Add(addend);
-        }
-
-        IVector IVector.Subtract(IVector subtrahend)
-        {
-            return this.Subtract(subtrahend);
-        }
-
-        IVector IVector.Multiply(float multiplicand)
-        {
-            return this.Multiply(multiplicand);
-        }
-
-        IVector IVector.Divide(float dividend)
-        {
-            return this.Divide(dividend);
-        }
-
-        IVector IVector.Normalize()
-        {
-            return this.Normalize();
         }
 
         public override int GetHashCode()
@@ -136,7 +111,7 @@
 
         public override bool Equals(object obj)
         {
-            var other = obj as IVector;
+            var other = obj as Vector;
             if (other != null)
             {
                 return this.X == other.X && this.Y == other.Y;
@@ -144,12 +119,12 @@
             return false;
         }
 
-        public static Vector operator +(Vector addend1, IVector addend2)
+        public static Vector operator +(Vector addend1, Vector addend2)
         {
             return addend1.Add(addend2);
         }
 
-        public static Vector operator -(Vector minuend, IVector subtrahend)
+        public static Vector operator -(Vector minuend, Vector subtrahend)
         {
             return minuend.Subtract(subtrahend);
         }
@@ -174,7 +149,7 @@
             return divisor.Divide(dividend);
         }
 
-        public static float operator *(Vector multiplicand, IVector multiplier)
+        public static float operator *(Vector multiplicand, Vector multiplier)
         {
             return multiplicand.Dot(multiplier);
         }
@@ -184,26 +159,14 @@
             return new Vector(-origin._X, -origin._Y);
         }
 
-        public static bool operator ==(Vector origin, IVector other)
+        public static bool operator ==(Vector origin, Vector other)
         {
             return origin.Equals(other);
         }
 
-        public static bool operator !=(Vector origin, IVector other)
+        public static bool operator !=(Vector origin, Vector other)
         {
             return !origin.Equals(other);
-        }
-
-
-        public System.Drawing.PointF ToPoint()
-        {
-            return new System.Drawing.PointF(X, Y);
-        }
-
-
-        public System.Drawing.SizeF ToSize()
-        {
-            return new System.Drawing.SizeF(X, Y);
         }
     }
 }

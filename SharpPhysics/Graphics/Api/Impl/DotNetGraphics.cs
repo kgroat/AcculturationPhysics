@@ -1,5 +1,6 @@
 ﻿namespace SharpPhysics.Graphics.Api.Impl
 {
+    using SharpPhysics.Physics.Api;
     using System;
     using System.Collections.Generic;
     using System.Drawing;
@@ -224,12 +225,12 @@
             g.DrawLine(p, startX, startY, endX, endY);
         }
 
-        public void DrawLine(Pen p, Physics.Api.IVector start, Physics.Api.IVector end)
+        public void DrawLine(Pen p, Vector start, Vector end)
         {
             g.DrawLine(p, start.ToPoint(), end.ToPoint());
         }
 
-        public void DrawLine(Pen p, Physics.Api.ILine line)
+        public void DrawLine(Pen p, Line line)
         {
             g.DrawLine(p, line.Start.ToPoint(), line.End.ToPoint());
         }
@@ -244,12 +245,12 @@
             g.DrawLines(p, points.ToArray());
         }
 
-        public void DrawLines(Pen p, IEnumerable<Physics.Api.IVector> points)
+        public void DrawLines(Pen p, IEnumerable<Vector> points)
         {
             g.DrawLines(p, points.Select(v => v.ToPoint()).ToArray());
         }
 
-        public void DrawLines(Pen p, IEnumerable<Physics.Api.ILine> lines)
+        public void DrawLines(Pen p, IEnumerable<Line> lines)
         {
             lines.Each(line => this.DrawLine(p, line));
         }
@@ -294,12 +295,12 @@
             this.g.DrawImage(i, x, y, width, height);
         }
 
-        public void DrawImage(Image i, Physics.Api.IVector location)
+        public void DrawImage(Image i, Vector location)
         {
             this.g.DrawImage(i, location.ToPoint());
         }
 
-        public void DrawImage(Image i, Physics.Api.IVector location, Physics.Api.IVector size)
+        public void DrawImage(Image i, Vector location, Vector size)
         {
             this.g.DrawImage(i, new RectangleF(location.X, location.Y, size.X, size.Y));
         }
@@ -314,7 +315,7 @@
             g.DrawPolygon(p, points.ToArray());
         }
 
-        public void DrawPolygon(Pen p, Physics.Api.IPolygon polygon)
+        public void DrawPolygon(Pen p, Polygon polygon)
         {
             this.DrawPolygon(p, polygon.Verticies.Select(v => v.ToPoint()));
         }
@@ -349,7 +350,7 @@
             g.DrawRectangle(p, x, y, width, height);
         }
 
-        public void DrawRectangle(Pen p, Physics.Api.IVector location, Physics.Api.IVector size)
+        public void DrawRectangle(Pen p, Vector location, Vector size)
         {
             g.DrawRectangle(p, location.X, location.Y, size.X, size.Y);
         }
@@ -394,12 +395,12 @@
             g.DrawString(s, font, brush, new Rectangle(x, y, width, height));
         }
 
-        public void DrawString(string s, Font font, Brush brush, Physics.Api.IVector location)
+        public void DrawString(string s, Font font, Brush brush, Vector location)
         {
             g.DrawString(s, font, brush, location.ToPoint());
         }
 
-        public void DrawString(string s, Font font, Brush brush, Physics.Api.IVector location, Physics.Api.IVector size)
+        public void DrawString(string s, Font font, Brush brush, Vector location, Vector size)
         {
             g.DrawString(s, font, brush, new RectangleF(location.ToPoint(), size.ToSize()));
         }
@@ -414,7 +415,7 @@
             g.FillPolygon(b, points.ToArray());
         }
 
-        public void FillPolygon(Brush b, Physics.Api.IPolygon polygon)
+        public void FillPolygon(Brush b, Polygon polygon)
         {
             this.FillPolygon(b, polygon.Verticies.Select(v => v.ToPoint()));
         }
@@ -449,7 +450,7 @@
             g.FillRectangle(b, x, y, width, height);
         }
 
-        public void FillRectangle(Brush b, Physics.Api.IVector location, Physics.Api.IVector size)
+        public void FillRectangle(Brush b, Vector location, Vector size)
         {
             g.FillRectangle(b, location.X, location.Y, size.X, size.Y);
         }

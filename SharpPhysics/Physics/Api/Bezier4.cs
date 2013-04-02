@@ -1,4 +1,4 @@
-﻿namespace SharpPhysics.Physics.Api.Impl
+﻿namespace SharpPhysics.Physics.Api
 {
     using System;
     using System.Collections.Generic;
@@ -6,9 +6,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class Bezier4 : Line
+    public class Bezier4 : Line
     {
-        private Vector B1, B2;
+        protected Vector B1, B2;
 
         public Bezier4(Vector start, Vector b1, Vector b2, Vector end)
             : base(start, end)
@@ -18,7 +18,7 @@
             this._Bounds = new Quadrilateral(start, end, b2, b1);
         }
 
-        public virtual bool Intersects(ILine intersector)
+        public override bool Intersects(Line intersector)
         {
             const float THRESHOLD = 1f / (1024 * 1024);
             var other = (Line)intersector;
@@ -36,15 +36,15 @@
             var split1 = this.SplitAt(.5f);
             var split2 = other.SplitAt(.5f);
 
-            return split1[0].Intersects(split2[0]) || split1[0].Intersects(split2[1]) || split1[1].Intersects(split2[0]) || split1[1].Intersects(split2[1]);
+            return split1.Item1.Intersects(split2.Item1) || split1.Item1.Intersects(split2.Item2) || split1.Item2.Intersects(split2.Item1) || split1.Item2.Intersects(split2.Item2);
         }
 
-        public virtual Vector PointOfIntersection(ILine intersector)
+        public override Vector PointOfIntersection(Line intersector)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IVector PointAtSection(float t)
+        public override Vector PointAtSection(float t)
         {
             var u = 1 - t;
             var t2 = t * t;
@@ -55,7 +55,7 @@
             return (u3 * Start) + (3 * u2 * t * B1) + (3 * u * t2 * B2) + (t3 * End);
         }
 
-        internal virtual Line[] SplitAt(float t)
+        public override Tuple<Line, Line> SplitAt(float t)
         {
             var p1 = Start;
             var p2 = B1;
@@ -78,7 +78,7 @@
             var p4321 = (p432 - p321) * t + p321;
             var second = new Bezier4(p4, p43, p432, p4321);
 
-            return new Line[] { first, second };
+            return new Tuple<Line, Line>(first, second);
         }
     }
 }

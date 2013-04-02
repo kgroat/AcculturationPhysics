@@ -1,4 +1,4 @@
-﻿namespace SharpPhysics.Physics.Api.Impl
+﻿namespace SharpPhysics.Physics.Api
 {
     using System;
     using System.Collections.Generic;
@@ -8,31 +8,51 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class Polygon : IPolygon
+    public class Polygon
     {
-        private Vector _Center;
+        protected Vector _Center { get; set; }
 
-        private float _SignedArea;
+        protected float _SignedArea { get; set; }
 
-        private float _Area;
+        protected float _Area { get; set; }
 
-        private ObservableCollection<Line> _Edges;
+        protected IList<Line> _Edges { get; set; }
 
-        private bool EdgesSorted, VerticesFound;
+        protected bool EdgesSorted { get; set; }
 
-        private float _Radius;
+        protected bool VerticesFound { get; set; }
 
-        private IEnumerable<Vector> _Vertices;
+        protected float _Radius { get; set; }
 
-        internal Polygon(IEnumerable<Line> Edges)
+        protected IList<Vector> _Verticies { get; set; }
+
+        protected Polygon() { }
+
+        public Polygon(IEnumerable<Line> Edges)
         {
-            this._Edges = new ObservableCollection<Line>(Edges);
-            this._Edges.CollectionChanged += _Edges_CollectionChanged;
+            var tmp = new ObservableCollection<Line>(Edges);
+            this._Edges = tmp;
+            tmp.CollectionChanged += _Edges_CollectionChanged;
             this.InitializeValues();
             this.SortEdges();
         }
 
-        internal float Radius
+        public Polygon(IList<Vector> Verticies)
+        {
+            this._Verticies = Verticies;
+            var tmp = new ObservableCollection<Line>();
+            for (int i = 0; i < Verticies.Count()-1; i++)
+            {
+                tmp.Add(new Line(Verticies[i], Verticies[i + 1]));
+            }
+            tmp.Add(new Line(Verticies[Verticies.Count() - 1], Verticies[0]));
+            this._Edges = tmp;
+            tmp.CollectionChanged += _Edges_CollectionChanged;
+            this.InitializeValues();
+            this.SortEdges();
+        }
+
+        public virtual float Radius
         {
             get
             {
@@ -44,7 +64,7 @@
             }
         }
 
-        internal Vector Center
+        public virtual Vector Center
         {
             get
             {
@@ -54,7 +74,7 @@
                 }
                 return this._Center;
             }
-            set
+            internal set
             {
                 if (this._Center == null)
                 {
@@ -77,7 +97,7 @@
             }
         }
 
-        internal float Area
+        public virtual float Area
         {
             get
             {
@@ -90,7 +110,7 @@
             }
         }
 
-        internal float SignedArea
+        public virtual float SignedArea
         {
             get
             {
@@ -103,7 +123,7 @@
             }
         }
 
-        internal Collection<Line> Edges
+        public virtual IList<Line> Edges
         {
             get
             {
@@ -115,63 +135,22 @@
             }
         }
 
-        internal IEnumerable<Vector> Verticies
+        public virtual IList<Vector> Verticies
         {
             get
             {
                 if (!this.VerticesFound)
                 {
-                    this._Vertices = this.Edges.Select(edge => edge.End);
+                    this._Verticies = this._Edges.Select(edge => edge.End).ToList();
                     this.VerticesFound = true;
                 }
-                return this._Vertices;
+                return this._Verticies;
             }
         }
 
-        IVector IPolygon.Center
-        {
-            get { return this._Center; }
-        }
+        public virtual RectanglePoly BoundingRect { get; protected set; }
 
-        float IPolygon.Area
-        {
-            get { return this.Area; }
-        }
-
-        IEnumerable<ILine> IPolygon.Edges
-        {
-            get { return (IList<ILine>)this._Edges; }
-        }
-
-        IEnumerable<IVector> IPolygon.Verticies
-        {
-            get { return this.Verticies; }
-        }
-        
-        private float CalculateArea()
-        {
-            return this.Area;
-        }
-
-        private void SortEdges()
-        {
-            for (int i = 0; i < this._Edges.Count() - 1; i++)
-            {
-                for (int j = i + 1; j < this._Edges.Count(); j++)
-                {
-                    if (this._Edges[j].Start == this._Edges[i].End)
-                    {
-                        var swap = this._Edges[i + 1];
-                        this._Edges[i + 1] = this._Edges[j];
-                        this._Edges[j] = swap;
-                        break;
-                    }
-                }
-            }
-            this.EdgesSorted = true;
-        }
-
-        public bool IsInside(IVector point)
+        public virtual bool IsInside(Vector point)
         {
             if ((Center - point).Length > Radius) return false;
             var lineOfIntersection = new Line((Vector)point, new Vector(Radius, Radius) + point);
@@ -179,7 +158,7 @@
             return (intersectionCount % 2) == 1;
         }
 
-        public bool Intersects(IPolygon polygon)
+        public virtual bool Intersects(Polygon polygon)
         {
             if (polygon.Verticies.Any(vertex => this.IsInside(vertex)))
             {
@@ -188,33 +167,19 @@
             return polygon.Edges.Any(edge => this.Intersects(edge));
         }
 
-        public bool Intersects(ILine line)
+        public virtual bool Intersects(Line line)
         {
             return _Edges.Any(edge => edge.Intersects(line));
         }
 
-        public IPolygon Intersection(IPolygon polygon)
+        public virtual Polygon Intersection(Polygon polygon)
         {
             throw new NotImplementedException();
         }
 
-        public IPolygon Sum(IPolygon polygon)
+        public virtual Polygon Sum(Polygon polygon)
         {
             throw new NotImplementedException();
-        }
-
-        private void _Edges_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            InitializeValues();
-        }
-
-        private void InitializeValues()
-        {
-            this._Center = null;
-            this._Area = -1;
-            this._Radius = -1;
-            this.EdgesSorted = false;
-            this.VerticesFound = false;
         }
 
         internal static Vector FindCenter(IEnumerable<Vector> verticies, float area)
@@ -242,7 +207,7 @@
 
             float area = 0.0f;
             int i, j = points - 1;
-            IVector pointI, pointJ;
+            Vector pointI, pointJ;
 
             for (i = 0; i < points; i++)
             {
@@ -253,6 +218,43 @@
             }
 
             return area * .5f;
+        }
+
+        protected virtual void _Edges_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            InitializeValues();
+        }
+
+        private float CalculateArea()
+        {
+            return this.Area;
+        }
+
+        private void SortEdges()
+        {
+            for (int i = 0; i < this._Edges.Count() - 1; i++)
+            {
+                for (int j = i + 1; j < this._Edges.Count(); j++)
+                {
+                    if (this._Edges[j].Start == this._Edges[i].End)
+                    {
+                        var swap = this._Edges[i + 1];
+                        this._Edges[i + 1] = this._Edges[j];
+                        this._Edges[j] = swap;
+                        break;
+                    }
+                }
+            }
+            this.EdgesSorted = true;
+        }
+
+        private void InitializeValues()
+        {
+            this._Center = null;
+            this._Area = -1;
+            this._Radius = -1;
+            this.EdgesSorted = false;
+            this.VerticesFound = false;
         }
     }
 }

@@ -46,26 +46,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Graphics\Api\BindingContext.cs" />
     <Compile Include="Graphics\Api\GraphicsHelper.cs" />
     <Compile Include="Graphics\Api\Impl\DotNetGraphics.cs" />
     <Compile Include="Graphics\Api\ARenderable.cs" />
-    <Compile Include="Graphics\Api\Impl\RenderContext.cs" />
-    <Compile Include="Graphics\Api\IRenderContext.cs" />
+    <Compile Include="Graphics\Api\RenderContext.cs" />
     <Compile Include="Graphics\Api\ISharpGraphics.cs" />
-    <Compile Include="Physics\Api\ILine.cs" />
-    <Compile Include="Physics\Api\Impl\Bezier3.cs" />
-    <Compile Include="Physics\Api\Impl\Bezier4.cs" />
-    <Compile Include="Physics\Api\Impl\Line.cs" />
-    <Compile Include="Physics\Api\Impl\PhysicsEnvironment.cs" />
-    <Compile Include="Physics\Api\Impl\PhysicsObject.cs" />
-    <Compile Include="Physics\Api\Impl\Polygon.cs" />
-    <Compile Include="Physics\Api\Impl\Quadrilateral.cs" />
-    <Compile Include="Physics\Api\Impl\Triangle.cs" />
-    <Compile Include="Physics\Api\Impl\Vector.cs" />
-    <Compile Include="Physics\Api\IPhysicsEnvironment.cs" />
-    <Compile Include="Physics\Api\IPhysicsObject.cs" />
-    <Compile Include="Physics\Api\IVector.cs" />
-    <Compile Include="Physics\Api\IPolygon.cs" />
+    <Compile Include="Physics\Api\Bezier3.cs" />
+    <Compile Include="Physics\Api\Bezier4.cs" />
+    <Compile Include="Physics\Api\Line.cs" />
+    <Compile Include="Physics\Api\PhysicsEnvironment.cs" />
+    <Compile Include="Physics\Api\PhysicsObject.cs" />
+    <Compile Include="Physics\Api\Polygon.cs" />
+    <Compile Include="Physics\Api\Quadrilateral.cs" />
+    <Compile Include="Physics\Api\Rectangle.cs" />
+    <Compile Include="Physics\Api\Triangle.cs" />
+    <Compile Include="Physics\Api\Vector.cs" />
+    <Compile Include="Physics\Api\LocalPhysics.cs" />
+    <Compile Include="Physics\Api\PhysicsEnvironmentSettings.cs" />
     <Compile Include="Physics\Api\PhysicsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

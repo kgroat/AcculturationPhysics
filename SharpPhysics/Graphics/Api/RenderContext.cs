@@ -1,7 +1,6 @@
-﻿namespace SharpPhysics.Graphics.Api.Impl
+﻿namespace SharpPhysics.Graphics.Api
 {
     using SharpPhysics.Physics.Api;
-    using SharpPhysics.Physics.Api.Impl;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -9,32 +8,25 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class RenderContext : IRenderContext
+    public class RenderContext
     {
         private RenderablePhysicsEnvironment __PhysicsEnvironment;
 
-        internal ObservableCollection<ARenderable> _Renderables { get; private set; }
-
-        internal PhysicsEnvironment _PhysicsEnvironment
-        {
-            get { return this.__PhysicsEnvironment; }
-        }
-
         internal RenderContext(int width, int height, float scale)
         {
+            var tmp = new ObservableCollection<ARenderable>();
             this.__PhysicsEnvironment = new RenderablePhysicsEnvironment(this);
-            this._Renderables = new ObservableCollection<ARenderable>();
-            this._Renderables.CollectionChanged += _Renderables_CollectionChanged;
+            this.Renderables = tmp;
+            tmp.CollectionChanged += _Renderables_CollectionChanged;
         }
 
-        public IPhysicsEnvironment PhysicsEnvironment
-        {
-            get { return this._PhysicsEnvironment; }
-        }
+        public PhysicsEnvironment PhysicsEnvironment { get; private set; }
 
-        public IList<ARenderable> Renderables
+        public IList<ARenderable> Renderables { get; private set; }
+
+        public void Render(System.Drawing.Graphics g)
         {
-            get { return _Renderables; }
+
         }
 
         private void _Renderables_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -57,9 +49,9 @@
                 this.ctx = ctx;
             }
 
-            internal override IEnumerable<PhysicsObject> PhysicsObjects
+            public override IEnumerable<PhysicsObject> PhysicsObjects
             {
-                get { return ctx._Renderables.Select(r => r._PhysicsObject); }
+                get { return ctx.Renderables.Select(r => r._PhysicsObject); }
             }
         }
     }

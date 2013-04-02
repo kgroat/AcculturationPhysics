@@ -56,17 +56,17 @@
 
         void DrawLine(Pen p, float startX, float startY, float endX, float endY);
 
-        void DrawLine(Pen p, IVector start, IVector end);
+        void DrawLine(Pen p, Vector start, Vector end);
 
-        void DrawLine(Pen p, ILine line);
+        void DrawLine(Pen p, Line line);
 
         void DrawLines(Pen p, IEnumerable<Point> points);
 
         void DrawLines(Pen p, IEnumerable<PointF> points);
 
-        void DrawLines(Pen p, IEnumerable<IVector> points);
+        void DrawLines(Pen p, IEnumerable<Vector> points);
 
-        void DrawLines(Pen p, IEnumerable<ILine> points);
+        void DrawLines(Pen p, IEnumerable<Line> points);
 
         void DrawImage(Image i, Point location);
 
@@ -84,15 +84,15 @@
 
         void DrawImage(Image i, float x, float y, float width, float height);
 
-        void DrawImage(Image i, IVector location);
+        void DrawImage(Image i, Vector location);
 
-        void DrawImage(Image i, IVector location, IVector size);
+        void DrawImage(Image i, Vector location, Vector size);
 
         void DrawPolygon(Pen p, IEnumerable<Point> points);
 
         void DrawPolygon(Pen p, IEnumerable<PointF> points);
 
-        void DrawPolygon(Pen p, IPolygon polygon);
+        void DrawPolygon(Pen p, Polygon polygon);
 
         void DrawRectangle(Pen p, Rectangle rectangle);
 
@@ -106,7 +106,7 @@
 
         void DrawRectangle(Pen p, float x, float y, float width, float height);
 
-        void DrawRectangle(Pen p, IVector location, IVector size);
+        void DrawRectangle(Pen p, Vector location, Vector size);
 
         void DrawString(string s, Font font, Brush brush, Point location);
 
@@ -124,15 +124,15 @@
 
         void DrawString(string s, Font font, Brush brush, int x, int y, int width, int height);
 
-        void DrawString(string s, Font font, Brush brush, IVector location);
+        void DrawString(string s, Font font, Brush brush, Vector location);
 
-        void DrawString(string s, Font font, Brush brush, IVector location, IVector size);
+        void DrawString(string s, Font font, Brush brush, Vector location, Vector size);
 
         void FillPolygon(Brush b, IEnumerable<Point> points);
 
         void FillPolygon(Brush b, IEnumerable<PointF> points);
 
-        void FillPolygon(Brush b, IPolygon polygon);
+        void FillPolygon(Brush b, Polygon polygon);
 
         void FillRectangle(Brush b, Rectangle rectangle);
 
@@ -146,7 +146,7 @@
 
         void FillRectangle(Brush b, float x, float y, float width, float height);
 
-        void FillRectangle(Brush b, IVector location, IVector size);
+        void FillRectangle(Brush b, Vector location, Vector size);
 
         SizeF MeasureString(string text, Font font);
 

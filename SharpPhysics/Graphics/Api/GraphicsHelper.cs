@@ -12,31 +12,6 @@ namespace SharpPhysics.Graphics.Api
 {
     public static class GraphicsHelper
     {
-        public static ISharpGraphics CreateGraphicsFromWindow(Window w)
-        {
-            System.Drawing.Graphics g = System.Drawing.Graphics.FromHwnd(new WindowInteropHelper(w).Handle);
-            return new DotNetGraphics(g);
-        }
 
-        public static ISharpGraphics CreateGraphicsFromImage(Image i)
-        {
-            System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(i);
-            return new DotNetGraphics(g);
-        }
-
-        public static ISharpGraphics CreateGraphicsFromGraphics(System.Drawing.Graphics g)
-        {
-            return new DotNetGraphics(g);
-        }
-
-        public static IRenderContext CreateRenderContext(int width, int height, float scale)
-        {
-            return null;
-        }
-
-        public static void BindRenderContext()
-        {
-
-        }
     }
 }
