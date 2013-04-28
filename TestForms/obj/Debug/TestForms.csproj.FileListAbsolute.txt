@@ -1,0 +1,11 @@
+D:\Dev\AcculturationPhysics\TestForms\bin\Debug\TestForms.exe.config
+D:\Dev\AcculturationPhysics\TestForms\bin\Debug\TestForms.exe
+D:\Dev\AcculturationPhysics\TestForms\bin\Debug\TestForms.pdb
+D:\Dev\AcculturationPhysics\TestForms\obj\Debug\TestForms.csprojResolveAssemblyReference.cache
+D:\Dev\AcculturationPhysics\TestForms\obj\Debug\TestForms.Properties.Resources.resources
+D:\Dev\AcculturationPhysics\TestForms\obj\Debug\TestForms.csproj.GenerateResource.Cache
+D:\Dev\AcculturationPhysics\TestForms\obj\Debug\TestForms.exe
+D:\Dev\AcculturationPhysics\TestForms\obj\Debug\TestForms.pdb
+D:\Dev\AcculturationPhysics\TestForms\bin\Debug\SharpPhysics.dll
+D:\Dev\AcculturationPhysics\TestForms\bin\Debug\SharpPhysics.pdb
+D:\Dev\AcculturationPhysics\TestForms\bin\Debug\FarseerPhysics.dll

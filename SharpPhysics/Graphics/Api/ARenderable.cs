@@ -14,8 +14,6 @@
 
         private Vector __TextureOffset, __TextureScale, __TextureSize;
 
-        private int __Width, __Height;
-
         private bool __IsRendered;
 
         internal PhysicsObject _PhysicsObject { get; set; }
@@ -40,22 +38,6 @@
             get { return this.__TextureSize; }
         }
 
-        internal int _Width
-        {
-            get
-            {
-                return __Width;
-            }
-        }
-
-        internal int _Height
-        {
-            get
-            {
-                return __Height;
-            }
-        }
-
         internal bool _IsRendered
         {
             get
@@ -68,13 +50,15 @@
             }
         }
 
+        internal RenderContext ctx { get; set; }
+
         public ARenderable(PhysicsObject PhysicsObject)
         {
-            __Width = __Height = 100;
             __TextureOffset = new Vector(0, 0);
             __TextureScale = new Vector(1, 1);
             __IsRendered = false;
             _PhysicsObject = (PhysicsObject)PhysicsObject;
+            __Texture = new Bitmap(Width, Height);
         }
 
         public Vector TextureOffset
@@ -106,7 +90,7 @@
                     throw new InvalidOperationException("TextureScale cannot be changed after a Renderable object has been rendered.");
                 }
                 this.__TextureScale = (Vector)value;
-                this.__TextureSize = new Vector(__Width * __TextureScale.X, __Height * __TextureScale.Y);
+                this.__TextureSize = new Vector(Width * __TextureScale.X, Height * __TextureScale.Y);
             }
         }
 
@@ -122,16 +106,7 @@
         {
             get
             {
-                return this.__Width;
-            }
-            set
-            {
-                if (__IsRendered)
-                {
-                    throw new InvalidOperationException("Width cannot be changed after a Renderable object has been rendered.");
-                }
-                this.__Width = value;
-                this.__TextureSize = new Vector(__Width * __TextureScale.X, __Height * __TextureScale.Y);
+                return (int)Bounds.BoundingRect.Width + 1;
             }
         }
 
@@ -139,16 +114,7 @@
         {
             get
             {
-                return this.__Height;
-            }
-            set
-            {
-                if (__IsRendered)
-                {
-                    throw new InvalidOperationException("Height cannot be changed after a Renderable object has been rendered.");
-                }
-                this.__Height = value;
-                this.__TextureSize = new Vector(__Width * __TextureScale.X, __Height * __TextureScale.Y);
+                return (int)Bounds.BoundingRect.Height + 1;
             }
         }
 
@@ -164,15 +130,20 @@
         {
             get
             {
-                return this._PhysicsObject.Bounds;
+                return this._PhysicsObject.Bounds.Rotate(this._PhysicsObject.CenterOfMass, this._PhysicsObject.Theta);
+            }
+            set
+            {
+                this._PhysicsObject.Bounds = value;
             }
         }
 
         public abstract void Render(Graphics graphics);
 
-        internal void CreateImageFromBounds()
+        public void Put(Graphics g)
         {
-            __Texture = new Bitmap(__Width, __Height);
+            g.Transform = new System.Drawing.Drawing2D.Matrix();
+            g.Transform.RotateAt(this.PhysicsObject.Theta, this.Bounds.Center.ToPoint());
         }
     }
 }

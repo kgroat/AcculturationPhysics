@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>FarseerPhysics.dll</id>
+    <version>3.3.1</version>
+    <title>FarseerPhysics.dll</title>
+    <authors>genbox</authors>
+    <owners>genbox</owners>
+    <licenseUrl>http://farseerphysics.codeplex.com/license</licenseUrl>
+    <projectUrl>http://farseerphysics.codeplex.com/</projectUrl>
+    <iconUrl>http://i.expression.microsoft.com/ee307357.newsletter_2009_07_Neubeck_01(en-us,MSDN.10).png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Farseer Physics Engine is a collision detection system with realistic physics responses.</description>
+    <releaseNotes>Release build for .NET 4.0 of version 3.3.1 changeset 99578 (2012-09-10)</releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <language />
+    <tags>Farseer Physics 2D</tags>
+    <references>
+      <reference file="FarseerPhysics.dll" />
+    </references>
+  </metadata>
+</package>

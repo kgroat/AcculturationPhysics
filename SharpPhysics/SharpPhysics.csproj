@@ -30,12 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FarseerPhysics, Version=3.3.1.41673, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FarseerPhysics.dll.3.3.1\lib\NET40\FarseerPhysics.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,28 +52,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Graphics\Api\BindingContext.cs" />
-    <Compile Include="Graphics\Api\GraphicsHelper.cs" />
+    <Compile Include="Graphics\Api\GraphicsBindingContext.cs" />
+    <Compile Include="GraphicsHelper.cs" />
     <Compile Include="Graphics\Api\Impl\DotNetGraphics.cs" />
     <Compile Include="Graphics\Api\ARenderable.cs" />
     <Compile Include="Graphics\Api\RenderContext.cs" />
     <Compile Include="Graphics\Api\ISharpGraphics.cs" />
-    <Compile Include="Physics\Api\Bezier3.cs" />
-    <Compile Include="Physics\Api\Bezier4.cs" />
-    <Compile Include="Physics\Api\Line.cs" />
+    <Compile Include="Physics\Api\FarseerTest.cs" />
     <Compile Include="Physics\Api\PhysicsEnvironment.cs" />
     <Compile Include="Physics\Api\PhysicsObject.cs" />
-    <Compile Include="Physics\Api\Polygon.cs" />
-    <Compile Include="Physics\Api\Quadrilateral.cs" />
-    <Compile Include="Physics\Api\Rectangle.cs" />
-    <Compile Include="Physics\Api\Triangle.cs" />
-    <Compile Include="Physics\Api\Vector.cs" />
     <Compile Include="Physics\Api\LocalPhysics.cs" />
     <Compile Include="Physics\Api\PhysicsEnvironmentSettings.cs" />
-    <Compile Include="Physics\Api\PhysicsHelper.cs" />
+    <Compile Include="Physics\Api\SharpWorld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

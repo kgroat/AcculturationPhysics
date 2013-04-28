@@ -12,7 +12,9 @@
 
         public Vector Gravity { get; set; }
 
-        public PhysicsEnvironmentSettings(float speed = 1f, float gravityX = 0, float gravityY = -9.8f)
+        public int LookaheadSteps { get; set; }
+
+        public PhysicsEnvironmentSettings(float speed = 1f, float gravityX = 0, float gravityY = 0.098f)
         {
             this.Speed = speed;
             this.Gravity = new Vector(gravityX, gravityY);

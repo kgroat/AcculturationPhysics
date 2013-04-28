@@ -1,5 +1,7 @@
 ﻿namespace SharpPhysics.Physics.Api
 {
+    using FarseerPhysics.Dynamics;
+    using FarseerPhysics.Collision;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -7,30 +9,36 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using FarseerPhysics.Collision.Shapes;
+    using Microsoft.Xna.Framework;
+using FarseerPhysics.Common;
 
     public abstract class PhysicsEnvironment
     {
-        internal PhysicsEnvironment()
-        {
-            this.Settings = new PhysicsEnvironmentSettings();
-        }
+        protected World FarseerWorld { get; set; }
 
-        internal PhysicsEnvironment(PhysicsEnvironmentSettings settings)
+        internal PhysicsEnvironment() : this(new PhysicsEnvironmentSettings(), new World(new Vector2(0f, 0f))) { }
+
+        internal PhysicsEnvironment(PhysicsEnvironmentSettings settings) : this(settings, new World(new Vector2(0f, 0f))) { }
+
+        internal PhysicsEnvironment(PhysicsEnvironmentSettings settings, World farseerWorld)
         {
             this.Settings = settings;
+            this.FarseerWorld = farseerWorld;
         }
 
-        public PhysicsEnvironmentSettings Settings { get; set; }
+        public PhysicsEnvironmentSettings Settings { get; protected set; }
 
-        public abstract IEnumerable<PhysicsObject> PhysicsObjects { get; }
+        public abstract List<Body> PhysicsObjects { get; }
 
-        public void Step()
+        public Body CreateBody()
         {
-            foreach (var obj in this.PhysicsObjects)
-            {
-                obj.Velocity += Settings.Gravity * Settings.Speed;
-                obj.CenterOfMass += obj.Velocity * Settings.Speed;
-            }
+            return new Body(FarseerWorld);
+        }
+
+        public BreakableBody CreateBreakableBody(IEnumerable<Vertices> vertices, float density)
+        {
+            return new BreakableBody(vertices, FarseerWorld, density);
         }
     }
 }

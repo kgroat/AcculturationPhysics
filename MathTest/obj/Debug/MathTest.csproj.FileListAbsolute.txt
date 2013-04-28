@@ -6,3 +6,4 @@ D:\Dev\AcculturationPhysics\MathTest\bin\Debug\SharpPhysics.pdb
 D:\Dev\AcculturationPhysics\MathTest\obj\Debug\MathTest.csprojResolveAssemblyReference.cache
 D:\Dev\AcculturationPhysics\MathTest\obj\Debug\MathTest.exe
 D:\Dev\AcculturationPhysics\MathTest\obj\Debug\MathTest.pdb
+D:\Dev\AcculturationPhysics\MathTest\bin\Debug\FarseerPhysics.dll

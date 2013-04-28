@@ -1,5 +1,6 @@
 ﻿namespace SharpPhysics.Graphics.Api
 {
+    using FarseerPhysics.Dynamics;
     using SharpPhysics.Physics.Api;
     using System;
     using System.Collections.Generic;
@@ -8,14 +9,12 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class RenderContext
+    public abstract class RenderContext
     {
-        private RenderablePhysicsEnvironment __PhysicsEnvironment;
-
-        internal RenderContext(int width, int height, float scale)
+        public RenderContext(float scale = 1)
         {
             var tmp = new ObservableCollection<ARenderable>();
-            this.__PhysicsEnvironment = new RenderablePhysicsEnvironment(this);
+            this.PhysicsEnvironment = new RenderablePhysicsEnvironment(this);
             this.Renderables = tmp;
             tmp.CollectionChanged += _Renderables_CollectionChanged;
         }
@@ -26,8 +25,20 @@
 
         public void Render(System.Drawing.Graphics g)
         {
-
+            g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
+            this.RenderBackdrop(g);
+            //g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            this.Ground.Render(g);
+            this.Renderables.Each(rend => rend.Render(g));
         }
+
+        public abstract float Width { get; }
+
+        public abstract float Height { get; }
+
+        public abstract ARenderable Ground { get; }
+
+        public abstract void RenderBackdrop(System.Drawing.Graphics g);
 
         private void _Renderables_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -35,8 +46,11 @@
             foreach (var item in items)
             {
                 item._IsRendered = true;
-                item.CreateImageFromBounds();
-                item.Render(System.Drawing.Graphics.FromImage(item._Texture));
+                using (var g = System.Drawing.Graphics.FromImage(item._Texture))
+                {
+                    item.Render(g);
+                    item.ctx = this;
+                }
             }
         }
 
@@ -49,7 +63,7 @@
                 this.ctx = ctx;
             }
 
-            public override IEnumerable<PhysicsObject> PhysicsObjects
+            public override IEnumerable<Fixture> PhysicsObjects
             {
                 get { return ctx.Renderables.Select(r => r._PhysicsObject); }
             }
